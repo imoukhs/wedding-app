@@ -250,74 +250,71 @@ export function TriviaTab() {
           <div className="bg-royal-purple/30 border border-gold/15 p-5 mb-6 relative overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
 
-            <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-              <div>
-                <p className="font-[family-name:var(--font-display)] text-xs tracking-[0.2em] uppercase text-gold">
-                  Game Control
-                </p>
-                <p className="text-gold-pale/50 text-sm mt-1">
-                  Status:{" "}
-                  <span className="text-gold-light capitalize">
-                    {game.status}
-                  </span>
-                  {game.status === "question" &&
-                    ` — Question ${game.currentQuestion}/${game.questions.length}`}
-                  {game.status === "question" &&
-                    " (auto-reveals when all tables answer)"}
-                </p>
-              </div>
-              <div className="flex gap-2 flex-wrap">
-                {game.status === "lobby" && (
-                  <Button
-                    onClick={handleStart}
-                    disabled={isPending || game.questions.length === 0}
-                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
-                  >
-                    <Play className="w-3.5 h-3.5 mr-1" /> Start Game
-                  </Button>
-                )}
-                {game.status === "question" && (
-                  <Button
-                    onClick={handleReveal}
-                    disabled={isPending}
-                    variant="outline"
-                    className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10 font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
-                  >
-                    <Eye className="w-3.5 h-3.5 mr-1" /> Force Reveal
-                  </Button>
-                )}
-                {game.status === "reveal" && (
-                  <Button
-                    onClick={handleLeaderboard}
-                    disabled={isPending}
-                    className="bg-gold hover:bg-gold-light text-deep-purple font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
-                  >
-                    <Trophy className="w-3.5 h-3.5 mr-1" /> Leaderboard
-                  </Button>
-                )}
-                {game.status === "leaderboard" && (
-                  <Button
-                    onClick={handleNextQuestion}
-                    disabled={isPending}
-                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
-                  >
-                    <SkipForward className="w-3.5 h-3.5 mr-1" />{" "}
-                    {game.currentQuestion >= game.questions.length
-                      ? "End Game"
-                      : "Next Question"}
-                  </Button>
-                )}
-                {game.status !== "lobby" && game.status !== "finished" && (
-                  <Button
-                    onClick={handleEndGame}
-                    disabled={isPending}
-                    variant="outline"
-                    className="border-red-500/30 text-red-400 hover:bg-red-500/10 font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
-                  >
-                    <Square className="w-3.5 h-3.5 mr-1" /> End Game
-                  </Button>
-                )}
-              </div>
+            {/* Status info — full width on mobile */}
+            <div className="mb-4">
+              <p className="font-[family-name:var(--font-display)] text-xs tracking-[0.2em] uppercase text-gold">
+                Game Control
+              </p>
+              <p className="text-gold-pale/50 text-sm mt-1">
+                Status:{" "}
+                <span className="text-gold-light capitalize">{game.status}</span>
+                {game.status === "question" &&
+                  ` — Question ${game.currentQuestion}/${game.questions.length}`}
+                {game.status === "question" &&
+                  " (auto-reveals when all tables answer)"}
+              </p>
+            </div>
+
+            {/* Action buttons — wrap on mobile */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {game.status === "lobby" && (
+                <Button
+                  onClick={handleStart}
+                  disabled={isPending || game.questions.length === 0}
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
+                >
+                  <Play className="w-3.5 h-3.5 mr-1" /> Start Game
+                </Button>
+              )}
+              {game.status === "question" && (
+                <Button
+                  onClick={handleReveal}
+                  disabled={isPending}
+                  variant="outline"
+                  className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10 font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
+                >
+                  <Eye className="w-3.5 h-3.5 mr-1" /> Force Reveal
+                </Button>
+              )}
+              {game.status === "reveal" && (
+                <Button
+                  onClick={handleLeaderboard}
+                  disabled={isPending}
+                  className="bg-gold hover:bg-gold-light text-deep-purple font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
+                >
+                  <Trophy className="w-3.5 h-3.5 mr-1" /> Leaderboard
+                </Button>
+              )}
+              {game.status === "leaderboard" && (
+                <Button
+                  onClick={handleNextQuestion}
+                  disabled={isPending}
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
+                >
+                  <SkipForward className="w-3.5 h-3.5 mr-1" />
+                  {game.currentQuestion >= game.questions.length ? "End Game" : "Next Question"}
+                </Button>
+              )}
+              {game.status !== "lobby" && game.status !== "finished" && (
+                <Button
+                  onClick={handleEndGame}
+                  disabled={isPending}
+                  variant="outline"
+                  className="border-red-500/30 text-red-400 hover:bg-red-500/10 font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.15em] uppercase"
+                >
+                  <Square className="w-3.5 h-3.5 mr-1" /> End Game
+                </Button>
+              )}
             </div>
 
             {/* MC Display link */}
@@ -362,7 +359,7 @@ export function TriviaTab() {
                     </div>
                     <button
                       onClick={() => handleDeleteQuestion(q.id)}
-                      className="text-red-400/40 hover:text-red-400 transition-colors"
+                      className="text-red-400/40 hover:text-red-400 transition-colors p-2.5 -mr-1 -mt-1"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>

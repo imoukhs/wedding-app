@@ -4,9 +4,7 @@ import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function getSchedule() {
-  return db.scheduleEvent.findMany({
-    orderBy: { order: "asc" },
-  });
+  return db.scheduleEvent.findMany({ orderBy: { order: "asc" } });
 }
 
 export async function addScheduleEvent(formData: FormData) {
@@ -18,12 +16,7 @@ export async function addScheduleEvent(formData: FormData) {
 
   const maxOrder = await db.scheduleEvent.aggregate({ _max: { order: true } });
   await db.scheduleEvent.create({
-    data: {
-      time,
-      event,
-      location: location || null,
-      order: (maxOrder._max.order ?? -1) + 1,
-    },
+    data: { time, event, location: location || null, order: (maxOrder._max.order ?? -1) + 1 },
   });
 
   revalidatePath("/admin");

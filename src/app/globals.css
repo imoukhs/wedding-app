@@ -107,6 +107,15 @@
   }
 }
 
+/* Hide scrollbar utility */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* Custom animations */
 @keyframes float {
   0%, 100% { transform: translateY(0); }

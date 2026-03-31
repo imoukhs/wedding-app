@@ -16,11 +16,15 @@ const SubmitOrdersSchema = z.object({
 
 export async function getTables() {
   return db.weddingTable.findMany({
-    include: {
-      orders: {
-        include: { menuItem: true },
-      },
-    },
+    include: { orders: { include: { menuItem: true } } },
+    orderBy: { number: "asc" },
+  });
+}
+
+export async function getTablesForCaterer() {
+  return db.weddingTable.findMany({
+    where: { orders: { some: {} } },
+    include: { orders: { include: { menuItem: { include: { category: true } } } } },
     orderBy: { number: "asc" },
   });
 }
@@ -28,22 +32,14 @@ export async function getTables() {
 export async function getTableByUniqueId(uniqueId: string) {
   return db.weddingTable.findUnique({
     where: { uniqueId },
-    include: {
-      orders: {
-        include: { menuItem: true },
-      },
-    },
+    include: { orders: { include: { menuItem: true } } },
   });
 }
 
 export async function addTable() {
   const maxNumber = await db.weddingTable.aggregate({ _max: { number: true } });
   const nextNumber = (maxNumber._max.number ?? 0) + 1;
-
-  const table = await db.weddingTable.create({
-    data: { number: nextNumber },
-  });
-
+  const table = await db.weddingTable.create({ data: { number: nextNumber } });
   revalidatePath("/admin");
   return table;
 }
@@ -58,30 +54,18 @@ export async function submitTableOrders(
   orders: { personName: string; menuItemId: string }[]
 ) {
   const parsed = SubmitOrdersSchema.safeParse({ tableUniqueId, orders });
-  if (!parsed.success) {
-    return { error: parsed.error.flatten().fieldErrors };
-  }
+  if (!parsed.success) return { error: parsed.error.flatten().fieldErrors };
 
-  const table = await db.weddingTable.findUnique({
-    where: { uniqueId: tableUniqueId },
-  });
-
+  const table = await db.weddingTable.findUnique({ where: { uniqueId: tableUniqueId } });
   if (!table) return { error: "Table not found" };
 
-  // Delete existing orders for this table and create new ones
   await db.$transaction(async (tx) => {
     await tx.tableOrder.deleteMany({ where: { tableId: table.id } });
-
     for (const order of parsed.data.orders) {
       await tx.tableOrder.create({
-        data: {
-          tableId: table.id,
-          personName: order.personName,
-          menuItemId: order.menuItemId,
-        },
+        data: { tableId: table.id, personName: order.personName, menuItemId: order.menuItemId },
       });
     }
-
     await tx.weddingTable.update({
       where: { id: table.id },
       data: { guestCount: parsed.data.orders.length },
@@ -91,20 +75,6 @@ export async function submitTableOrders(
   revalidatePath("/admin");
   revalidatePath("/caterer");
   return { success: true };
-}
-
-export async function getTablesForCaterer() {
-  return db.weddingTable.findMany({
-    where: {
-      orders: { some: {} },
-    },
-    include: {
-      orders: {
-        include: { menuItem: { include: { category: true } } },
-      },
-    },
-    orderBy: { number: "asc" },
-  });
 }
 
 export async function markTableServed(tableId: string) {

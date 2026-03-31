@@ -4,10 +4,7 @@ import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function getMenuCategories() {
-  return db.menuCategory.findMany({
-    include: { items: true },
-    orderBy: { order: "asc" },
-  });
+  return db.menuCategory.findMany({ include: { items: true }, orderBy: { order: "asc" } });
 }
 
 export async function addMenuCategory(formData: FormData) {
@@ -15,9 +12,7 @@ export async function addMenuCategory(formData: FormData) {
   if (!name) return { error: "Name is required" };
 
   const maxOrder = await db.menuCategory.aggregate({ _max: { order: true } });
-  await db.menuCategory.create({
-    data: { name, order: (maxOrder._max.order ?? -1) + 1 },
-  });
+  await db.menuCategory.create({ data: { name, order: (maxOrder._max.order ?? -1) + 1 } });
 
   revalidatePath("/admin");
   revalidatePath("/menu");
