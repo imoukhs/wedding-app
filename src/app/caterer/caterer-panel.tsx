@@ -125,7 +125,7 @@ export function CatererPanel() {
             <h1 className="font-[family-name:var(--font-display)] text-xl tracking-[0.2em] text-gold-light mb-1">
               KITCHEN ACCESS
             </h1>
-            <p className="text-gold-pale/50 text-sm">Enter PIN to view orders</p>
+            <p className="text-gold-pale/50 text-sm">Enter password to view orders</p>
           </div>
 
           <div className="bg-royal-purple/25 border border-gold/20 p-8 relative">
@@ -133,8 +133,7 @@ export function CatererPanel() {
 
             <Input
               type="password"
-              inputMode="numeric"
-              placeholder="Enter PIN"
+              placeholder="Enter password"
               value={pin}
               onChange={(e) => {
                 setPin(e.target.value);
