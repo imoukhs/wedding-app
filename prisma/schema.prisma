@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Guest {
+  id               String   @id @default(cuid())
+  name             String
+  email            String?
+  phone            String?
+  status           String   @default("pending")
+  mealPreference   String?
+  guestCount       Int      @default(1)
+  notes            String?
+  hasAccessCard    Boolean  @default(true)
+  flaggedByBouncer Boolean  @default(false)
+  checkedIn        Boolean  @default(false)
+  checkedInAt      DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model MenuCategory {
+  id    String     @id @default(cuid())
+  name  String
+  order Int        @default(0)
+  items MenuItem[]
+}
+
+model MenuItem {
+  id         String       @id @default(cuid())
+  name       String
+  categoryId String
+  category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  orders     TableOrder[]
+}
+
+model WeddingTable {
+  id             String         @id @default(cuid())
+  number         Int            @unique
+  uniqueId       String         @unique @default(cuid())
+  guestCount     Int            @default(0)
+  served         Boolean        @default(false)
+  servedAt       DateTime?
+  orders         TableOrder[]
+  triviaAnswers  TriviaAnswer[]
+  triviaVotes    TriviaVote[]
+}
+
+model TableOrder {
+  id         String       @id @default(cuid())
+  tableId    String
+  table      WeddingTable @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  personName String
+  menuItemId String
+  menuItem   MenuItem     @relation(fields: [menuItemId], references: [id])
+  createdAt  DateTime     @default(now())
+}
+
+model ScheduleEvent {
+  id       String  @id @default(cuid())
+  time     String
+  event    String
+  location String?
+  order    Int     @default(0)
+}
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
+
+model TriviaGame {
+  id              String           @id @default(cuid())
+  status          String           @default("lobby")
+  currentQuestion Int              @default(0)
+  timerEndsAt     DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  questions       TriviaQuestion[]
+  answers         TriviaAnswer[]
+  votes           TriviaVote[]
+}
+
+model TriviaQuestion {
+  id            String         @id @default(cuid())
+  gameId        String
+  game          TriviaGame     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  questionText  String
+  optionA       String
+  optionB       String
+  optionC       String
+  optionD       String
+  correctOption String
+  order         Int            @default(0)
+  answers       TriviaAnswer[]
+  votes         TriviaVote[]
+}
+
+model TriviaAnswer {
+  id           String         @id @default(cuid())
+  gameId       String
+  game         TriviaGame     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  questionId   String
+  question     TriviaQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  tableId      String
+  table        WeddingTable   @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  chosenOption String
+  isCorrect    Boolean        @default(false)
+  points       Int            @default(0)
+  submittedAt  DateTime       @default(now())
+
+  @@unique([questionId, tableId])
+}
+
+model TriviaVote {
+  id           String         @id @default(cuid())
+  gameId       String
+  game         TriviaGame     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  questionId   String
+  question     TriviaQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  tableId      String
+  table        WeddingTable   @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  guestName    String
+  chosenOption String
+  votedAt      DateTime       @default(now())
+
+  @@unique([questionId, tableId, guestName])
+}
