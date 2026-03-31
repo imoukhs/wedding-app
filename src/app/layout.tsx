@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lauretta & Caleb | Lock In 2026",
+  title: "Lauretta & Caleb | #LockIN2026",
   description: "Join us for the wedding celebration of Lauretta & Caleb — April 25, 2026",
 };
 

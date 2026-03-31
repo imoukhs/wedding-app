@@ -7,7 +7,7 @@ export function Footer({ coupleName }: { coupleName?: string }) {
         <span className="block h-px w-12 bg-gradient-to-l from-transparent to-gold/30" />
       </div>
       <p className="font-[family-name:var(--font-display)] text-[0.65rem] tracking-[0.3em] uppercase text-gold-pale/40">
-        {coupleName || "Lauretta & Caleb"} &mdash; Lock In 2026
+        {coupleName || "Lauretta & Caleb"} &mdash; #LOCKin 2026
       </p>
       <p className="text-gold-pale/20 text-[0.55rem] tracking-[0.15em] uppercase mt-2">
         Built by King &mdash; the last born / bride&apos;s brother

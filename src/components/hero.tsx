@@ -37,7 +37,7 @@ export function Hero({ coupleName, weddingDate, venue, ceremonyTime, receptionTi
         transition={{ duration: 1, delay: 0.2 }}
         className="relative z-10 font-[family-name:var(--font-heading)] text-[clamp(3.5rem,8vw,7rem)] font-light leading-none text-cream"
       >
-        <em className="italic text-gold-light">Lock In</em>
+        <em className="italic text-gold-light">#LOCKin</em>
         <br />
         2026
       </motion.h1>

@@ -29,7 +29,7 @@ export function GuestNav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-4 bg-deep-purple/85 backdrop-blur-xl border-b border-gold/20">
       <div className="font-[family-name:var(--font-display)] text-sm tracking-[0.3em] uppercase text-gold-light">
-        Lock In 2026
+        #LOCKin 2026
       </div>
       <div className="flex gap-8">
         {links.map((link) => (
