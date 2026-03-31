@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { verifyBouncerPin } from "@/lib/actions/auth-actions";
 import { getGuests, getGuestStats, checkInGuest } from "@/lib/actions/guest-actions";
 import { toast } from "sonner";
-import { Shield, Search, Users, CheckCircle, UserCheck } from "lucide-react";
+import { Shield, Search, Users, CheckCircle, UserCheck, Eye, EyeOff } from "lucide-react";
 
 interface Guest {
   id: string;
@@ -32,6 +32,7 @@ export function BouncerPanel() {
   const [stats, setStats] = useState<Stats>({ total: 0, attending: 0, totalGuests: 0 });
   const [search, setSearch] = useState("");
   const [isPending, startTransition] = useTransition();
+  const [showPin, setShowPin] = useState(false);
 
   const [optimisticGuests, setOptimisticGuests] = useOptimistic(
     guests,
@@ -92,15 +93,25 @@ export function BouncerPanel() {
 
           <div className="bg-royal-purple/25 border border-gold/20 p-8 relative">
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
-            <Input
-              type="password"
-              inputMode="numeric"
-              placeholder="Enter PIN"
-              value={pin}
-              onChange={(e) => { setPin(e.target.value); setPinError(false); }}
-              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              className="bg-deep-purple/60 border-gold/25 text-cream text-center text-2xl tracking-[0.5em] placeholder:text-gold-pale/30 focus:border-gold mb-4 h-14"
-            />
+            <div className="relative mb-4">
+              <Input
+                type={showPin ? "text" : "password"}
+                inputMode="numeric"
+                placeholder="Enter PIN"
+                value={pin}
+                onChange={(e) => { setPin(e.target.value); setPinError(false); }}
+                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                className="bg-deep-purple/60 border-gold/25 text-cream text-center text-2xl tracking-[0.5em] placeholder:text-gold-pale/30 focus:border-gold h-14 pr-12"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPin(v => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gold-pale/50 hover:text-gold transition-colors"
+                tabIndex={-1}
+              >
+                {showPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
             {pinError && <p className="text-destructive text-sm text-center mb-4">Incorrect PIN</p>}
             <Button
               onClick={handleLogin}

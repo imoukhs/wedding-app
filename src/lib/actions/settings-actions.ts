@@ -30,3 +30,12 @@ export async function updateSettings(formData: FormData) {
   revalidatePath("/admin");
   return { success: true };
 }
+
+export async function updatePassword(
+  key: "adminPassword" | "bouncerPin" | "catererPin",
+  value: string
+) {
+  if (!value || value.trim().length < 4) return { error: "Must be at least 4 characters" };
+  await db.setting.upsert({ where: { key }, update: { value }, create: { key, value } });
+  return { success: true };
+}

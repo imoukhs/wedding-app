@@ -12,9 +12,10 @@ import { TableOrdersTab } from "./components/table-orders-tab";
 import { ScheduleTab } from "./components/schedule-tab";
 import { SettingsTab } from "./components/settings-tab";
 import { TriviaTab } from "./components/trivia-tab";
+import { SecurityTab } from "./components/security-tab";
 import {
   Lock, Menu, X, Users, UtensilsCrossed,
-  TableProperties, Calendar, Settings, Gamepad2,
+  TableProperties, Calendar, Settings, Gamepad2, ShieldCheck, Eye, EyeOff,
 } from "lucide-react";
 
 const TABS = [
@@ -24,6 +25,7 @@ const TABS = [
   { value: "schedule", label: "Schedule", Icon: Calendar },
   { value: "settings", label: "Settings", Icon: Settings },
   { value: "trivia",   label: "Trivia",   Icon: Gamepad2 },
+  { value: "security", label: "Security", Icon: ShieldCheck },
 ];
 
 export function AdminPanel() {
@@ -33,6 +35,7 @@ export function AdminPanel() {
   const [isPending, startTransition] = useTransition();
   const [activeTab, setActiveTab] = useState("guests");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   function handleLogin() {
     startTransition(async () => {
@@ -58,14 +61,24 @@ export function AdminPanel() {
 
           <div className="bg-royal-purple/25 border border-gold/20 p-8 relative">
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
-            <Input
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => { setPassword(e.target.value); setError(false); }}
-              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              className="bg-deep-purple/60 border-gold/25 text-cream placeholder:text-gold-pale/30 focus:border-gold mb-4"
-            />
+            <div className="relative mb-4">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => { setPassword(e.target.value); setError(false); }}
+                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                className="bg-deep-purple/60 border-gold/25 text-cream placeholder:text-gold-pale/30 focus:border-gold pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(v => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gold-pale/50 hover:text-gold transition-colors"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
             {error && <p className="text-destructive text-sm text-center mb-4">Incorrect password</p>}
             <Button
               onClick={handleLogin}
@@ -156,6 +169,7 @@ export function AdminPanel() {
           <TabsContent value="schedule"><ScheduleTab /></TabsContent>
           <TabsContent value="settings"><SettingsTab /></TabsContent>
           <TabsContent value="trivia"><TriviaTab /></TabsContent>
+          <TabsContent value="security"><SecurityTab /></TabsContent>
         </Tabs>
       </div>
     </div>
