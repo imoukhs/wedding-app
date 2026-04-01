@@ -37,7 +37,7 @@ export function Hero({ coupleName, weddingDate, venue, ceremonyTime, receptionTi
         transition={{ duration: 1, delay: 0.2 }}
         className="relative z-10 font-[family-name:var(--font-heading)] text-[clamp(3.5rem,8vw,7rem)] font-light leading-none text-cream"
       >
-        <em className="italic text-gold-light">#LOCKin</em>
+        <em className="italic text-gold-light">LOCK In</em>
         <br />
         2026
       </motion.h1>
@@ -46,7 +46,7 @@ export function Hero({ coupleName, weddingDate, venue, ceremonyTime, receptionTi
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.4 }}
-        className="relative z-10 font-[family-name:var(--font-display)] text-[clamp(1.4rem,3vw,2.2rem)] font-semibold tracking-wider text-white mt-2"
+        className="relative z-10 font-[family-name:var(--font-display)] text-[clamp(0.95rem,5vw,2.2rem)] font-semibold tracking-wider text-white mt-2 whitespace-nowrap"
       >
         {coupleName}
       </motion.div>
