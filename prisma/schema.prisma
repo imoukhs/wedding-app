@@ -20,6 +20,10 @@ model Guest {
   flaggedByBouncer Boolean  @default(false)
   checkedIn        Boolean  @default(false)
   checkedInAt      DateTime?
+  serial           String?  @unique
+  cardToken        String?  @unique
+  cardViewed       Boolean  @default(false)
+  deviceToken      String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }

@@ -16,6 +16,7 @@ interface Guest {
   status: string;
   checkedIn: boolean;
   checkedInAt: Date | null;
+  serial: string | null;
 }
 
 interface Stats {
@@ -205,6 +206,9 @@ export function BouncerPanel() {
                   <p className="text-xs text-gold-pale/50">
                     {guest.guestCount} {guest.guestCount === 1 ? "person" : "people"}
                   </p>
+                  {guest.serial && (
+                    <span className="font-mono text-[0.6rem] text-gold/50">{guest.serial}</span>
+                  )}
                   {guest.checkedIn && (
                     <span className="text-[0.6rem] text-emerald-400/60 flex items-center gap-0.5">
                       <CheckCircle className="w-2.5 h-2.5" /> In
