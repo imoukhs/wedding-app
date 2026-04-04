@@ -31,8 +31,13 @@ export function GuestListTab() {
   }, []);
 
   async function loadGuests() {
-    const data = await getGuests();
-    setGuests(data);
+    try {
+      const data = await getGuests();
+      setGuests(data);
+    } catch (e) {
+      toast.error("Failed to load guests — check database connection");
+      console.error("loadGuests error:", e);
+    }
   }
 
   function handleAdd() {
