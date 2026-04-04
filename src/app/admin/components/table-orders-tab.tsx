@@ -2,9 +2,9 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { getTables, addTable, deleteTable } from "@/lib/actions/table-actions";
+import { getTables, addTable, deleteTable, wipeAllOrders } from "@/lib/actions/table-actions";
 import { toast } from "sonner";
-import { Plus, Trash2, QrCode, Utensils, Users } from "lucide-react";
+import { Plus, Trash2, QrCode, Utensils, Users, Eraser } from "lucide-react";
 import { QrGenerator } from "./qr-generator";
 
 interface TableOrder {
@@ -52,6 +52,15 @@ export function TableOrdersTab() {
     });
   }
 
+  function handleWipeOrders() {
+    if (!confirm("Wipe ALL orders from every table? This cannot be undone.")) return;
+    startTransition(async () => {
+      await wipeAllOrders();
+      await loadTables();
+      toast.success("All orders wiped");
+    });
+  }
+
   if (showQr) {
     return (
       <div>
@@ -69,7 +78,7 @@ export function TableOrdersTab() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-wrap items-center gap-2 mb-6">
         <Button
           onClick={handleAddTable}
           disabled={isPending}
@@ -83,6 +92,14 @@ export function TableOrdersTab() {
           className="border-gold/30 text-gold hover:bg-gold/10 font-[family-name:var(--font-display)] text-[0.7rem] tracking-[0.15em] uppercase"
         >
           <QrCode className="w-4 h-4 mr-1" /> QR Codes
+        </Button>
+        <Button
+          variant="outline"
+          onClick={handleWipeOrders}
+          disabled={isPending}
+          className="border-red-500/30 text-red-400/70 hover:text-red-400 hover:bg-red-500/10 font-[family-name:var(--font-display)] text-[0.7rem] tracking-[0.15em] uppercase ml-auto"
+        >
+          <Eraser className="w-4 h-4 mr-1" /> Wipe Orders
         </Button>
       </div>
 

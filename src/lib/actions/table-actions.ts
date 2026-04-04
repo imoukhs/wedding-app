@@ -94,3 +94,13 @@ export async function unmarkTableServed(tableId: string) {
   revalidatePath("/caterer");
   revalidatePath("/admin");
 }
+
+export async function wipeAllOrders() {
+  await db.$transaction(async (tx) => {
+    await tx.tableOrder.deleteMany({});
+    await tx.weddingTable.updateMany({ data: { guestCount: 0, served: false, servedAt: null } });
+  });
+  revalidatePath("/admin");
+  revalidatePath("/caterer");
+  return { success: true };
+}
