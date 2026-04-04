@@ -2,46 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wedding Access Card Preview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wedding Access Card</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html, body {
+      width: 100%;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
     body {
-      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       background: #0d0118;
       font-family: 'Jost', sans-serif;
-      padding: 40px 20px;
-      overflow-x: hidden;
+      padding: 24px 16px;
+      -webkit-tap-highlight-color: transparent;
     }
 
     /* Ambient background glow */
     body::before {
       content: '';
       position: fixed;
-      top: -30%;
+      top: -20%;
       left: 50%;
       transform: translateX(-50%);
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(107,33,168,0.3) 0%, transparent 70%);
+      width: 100vw;
+      max-width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(107,33,168,0.35) 0%, transparent 70%);
       pointer-events: none;
+      z-index: 0;
     }
 
-    .card-container {
-      perspective: 1200px;
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80vw;
+      height: 400px;
+      background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* ===== THE CARD ===== */
     .access-card {
       position: relative;
-      width: 380px;
-      min-height: 620px;
-      border-radius: 24px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 20px;
       overflow: hidden;
       background: linear-gradient(165deg, #1a0533 0%, #2a0a4a 30%, #1a0533 60%, #120328 100%);
       box-shadow:
@@ -49,13 +66,7 @@
         0 0 40px rgba(107,33,168,0.4),
         0 20px 60px rgba(0,0,0,0.6),
         inset 0 1px 0 rgba(201,162,39,0.2);
-      animation: cardFloat 6s ease-in-out infinite;
-      transform-style: preserve-3d;
-    }
-
-    @keyframes cardFloat {
-      0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
-      50% { transform: translateY(-12px) rotateX(1deg) rotateY(-1deg); }
+      z-index: 1;
     }
 
     /* Gold shimmer overlay */
@@ -76,16 +87,16 @@
     }
 
     @keyframes shimmer {
-      0%, 100% { transform: translateX(-100%); }
-      50% { transform: translateX(100%); }
+      0%, 100% { transform: translateX(-120%); }
+      50% { transform: translateX(120%); }
     }
 
     /* Ornamental border frame */
     .card-border-frame {
       position: absolute;
-      inset: 8px;
+      inset: 6px;
       border: 1px solid rgba(201,162,39,0.25);
-      border-radius: 18px;
+      border-radius: 16px;
       pointer-events: none;
       z-index: 2;
     }
@@ -95,14 +106,14 @@
       position: absolute;
       inset: 4px;
       border: 1px solid rgba(201,162,39,0.1);
-      border-radius: 14px;
+      border-radius: 12px;
     }
 
     /* Corner ornaments */
     .corner-ornament {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       z-index: 3;
     }
 
@@ -113,21 +124,21 @@
       background: linear-gradient(135deg, #c9a227, #e8c55a);
     }
 
-    .corner-tl { top: 14px; left: 14px; }
-    .corner-tl::before { top: 0; left: 0; width: 20px; height: 1.5px; }
-    .corner-tl::after { top: 0; left: 0; width: 1.5px; height: 20px; }
+    .corner-tl { top: 12px; left: 12px; }
+    .corner-tl::before { top: 0; left: 0; width: 18px; height: 1.5px; }
+    .corner-tl::after { top: 0; left: 0; width: 1.5px; height: 18px; }
 
-    .corner-tr { top: 14px; right: 14px; }
-    .corner-tr::before { top: 0; right: 0; width: 20px; height: 1.5px; }
-    .corner-tr::after { top: 0; right: 0; width: 1.5px; height: 20px; }
+    .corner-tr { top: 12px; right: 12px; }
+    .corner-tr::before { top: 0; right: 0; width: 18px; height: 1.5px; }
+    .corner-tr::after { top: 0; right: 0; width: 1.5px; height: 18px; }
 
-    .corner-bl { bottom: 14px; left: 14px; }
-    .corner-bl::before { bottom: 0; left: 0; width: 20px; height: 1.5px; }
-    .corner-bl::after { bottom: 0; left: 0; width: 1.5px; height: 20px; }
+    .corner-bl { bottom: 12px; left: 12px; }
+    .corner-bl::before { bottom: 0; left: 0; width: 18px; height: 1.5px; }
+    .corner-bl::after { bottom: 0; left: 0; width: 1.5px; height: 18px; }
 
-    .corner-br { bottom: 14px; right: 14px; }
-    .corner-br::before { bottom: 0; right: 0; width: 20px; height: 1.5px; }
-    .corner-br::after { bottom: 0; right: 0; width: 1.5px; height: 20px; }
+    .corner-br { bottom: 12px; right: 12px; }
+    .corner-br::before { bottom: 0; right: 0; width: 18px; height: 1.5px; }
+    .corner-br::after { bottom: 0; right: 0; width: 1.5px; height: 18px; }
 
     /* Background decorative pattern */
     .card-bg-pattern {
@@ -145,22 +156,22 @@
     /* Purple glow accent */
     .card-glow {
       position: absolute;
-      top: -50%;
+      top: -40%;
       left: 50%;
       transform: translateX(-50%);
-      width: 300px;
-      height: 300px;
+      width: 100%;
+      height: 280px;
       background: radial-gradient(circle, rgba(107,33,168,0.5) 0%, transparent 70%);
       pointer-events: none;
     }
 
     .card-glow-bottom {
       position: absolute;
-      bottom: -40%;
+      bottom: -30%;
       left: 50%;
       transform: translateX(-50%);
-      width: 250px;
-      height: 250px;
+      width: 80%;
+      height: 220px;
       background: radial-gradient(circle, rgba(201,162,39,0.15) 0%, transparent 70%);
       pointer-events: none;
     }
@@ -172,7 +183,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 30px 32px;
+      padding: 36px 24px 28px;
       text-align: center;
     }
 
@@ -184,13 +195,13 @@
       letter-spacing: 0.35em;
       text-transform: uppercase;
       color: rgba(201,162,39,0.7);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     /* Lock In heading */
     .card-event-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.6rem;
+      font-size: clamp(2rem, 8vw, 2.6rem);
       font-weight: 300;
       line-height: 1;
       color: #fdf8f0;
@@ -204,17 +215,17 @@
 
     .card-event-year {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
+      font-size: clamp(1.3rem, 4vw, 1.6rem);
       font-weight: 300;
       color: #fdf8f0;
       letter-spacing: 0.15em;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     /* Couple name */
     .couple-name {
       font-family: 'Cinzel', serif;
-      font-size: 1.15rem;
+      font-size: clamp(0.9rem, 3.5vw, 1.15rem);
       font-weight: 600;
       letter-spacing: 0.12em;
       color: #ffffff;
@@ -226,13 +237,13 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin: 18px 0;
+      margin: 16px 0;
       width: 100%;
       justify-content: center;
     }
 
     .divider-line {
-      width: 60px;
+      width: 50px;
       height: 1px;
       background: linear-gradient(90deg, transparent, #c9a227, transparent);
     }
@@ -244,7 +255,7 @@
 
     /* Guest name section */
     .guest-section {
-      margin: 8px 0 20px;
+      margin: 6px 0 16px;
     }
 
     .guest-label {
@@ -254,15 +265,16 @@
       letter-spacing: 0.4em;
       text-transform: uppercase;
       color: rgba(201,162,39,0.5);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .guest-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 6vw, 2rem);
       font-weight: 600;
       color: #fdf8f0;
       line-height: 1.1;
+      word-break: break-word;
     }
 
     .guest-count {
@@ -278,10 +290,10 @@
     .event-details {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 4px;
+      gap: 2px;
       width: 100%;
-      margin: 12px 0 20px;
-      padding: 16px 8px;
+      margin: 10px 0 18px;
+      padding: 14px 8px;
       background: rgba(26,5,51,0.6);
       border-radius: 12px;
       border: 1px solid rgba(201,162,39,0.1);
@@ -295,18 +307,18 @@
       font-family: 'Jost', sans-serif;
       font-size: 0.5rem;
       font-weight: 500;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: #c9a227;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .detail-value {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
       font-weight: 400;
       color: #fdf8f0;
-      line-height: 1.2;
+      line-height: 1.25;
     }
 
     /* Serial number badge */
@@ -314,16 +326,16 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 20px;
+      padding: 8px 18px;
       background: linear-gradient(135deg, rgba(201,162,39,0.15), rgba(201,162,39,0.05));
       border: 1px solid rgba(201,162,39,0.3);
       border-radius: 100px;
-      margin: 8px 0 16px;
+      margin: 6px 0 14px;
     }
 
     .serial-number {
       font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.15em;
       background: linear-gradient(135deg, #c9a227, #e8c55a, #c9a227);
@@ -349,7 +361,7 @@
       text-transform: uppercase;
     }
 
-    /* QR Code placeholder */
+    /* QR Code */
     .qr-section {
       display: flex;
       flex-direction: column;
@@ -358,8 +370,8 @@
     }
 
     .qr-code {
-      width: 90px;
-      height: 90px;
+      width: 88px;
+      height: 88px;
       background: #fdf8f0;
       border-radius: 10px;
       padding: 6px;
@@ -394,11 +406,11 @@
     /* Verified badge */
     .verified-badge {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 16px;
+      right: 16px;
       z-index: 6;
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -408,8 +420,8 @@
     }
 
     .verified-badge svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       fill: none;
       stroke: #c9a227;
       stroke-width: 2;
@@ -421,7 +433,7 @@
     .card-footer {
       position: relative;
       z-index: 5;
-      padding: 0 30px 24px;
+      padding: 0 24px 20px;
       text-align: center;
     }
 
@@ -434,142 +446,266 @@
       text-transform: uppercase;
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 420px) {
-      .access-card {
-        width: 340px;
-        min-height: 580px;
-      }
-      .card-content {
-        padding: 32px 24px 28px;
-      }
-      .card-event-title { font-size: 2.2rem; }
-      .guest-name { font-size: 1.7rem; }
+    /* ===== "ADD TO WALLET" BUTTON (mobile CTA) ===== */
+    .card-actions {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 24px 24px;
     }
 
-    /* ===== STATUS VARIANTS ===== */
-    /* This shows how the card would look when flagged/invalid */
-    .card-status-valid .serial-badge {
-      border-color: rgba(34,197,94,0.3);
-      background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(34,197,94,0.02));
-    }
-
-    .page-title {
-      text-align: center;
-      margin-bottom: 40px;
-      color: #fdf8f0;
-    }
-
-    .page-title h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.2em;
-      color: #c9a227;
-      margin-bottom: 8px;
-    }
-
-    .page-title p {
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(201,162,39,0.25);
+      background: linear-gradient(135deg, rgba(201,162,39,0.12), rgba(201,162,39,0.04));
+      color: #e8c55a;
       font-family: 'Jost', sans-serif;
       font-size: 0.75rem;
+      font-weight: 500;
       letter-spacing: 0.15em;
-      color: rgba(245,230,163,0.5);
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .action-btn:active {
+      transform: scale(0.97);
+      background: linear-gradient(135deg, rgba(201,162,39,0.2), rgba(201,162,39,0.08));
+    }
+
+    .action-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #c9a227;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ===== DEVICE LOCK NOTICE ===== */
+    .device-notice {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(201,162,39,0.1);
+      background: rgba(26,5,51,0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1;
+    }
+
+    .device-notice svg {
+      width: 16px;
+      height: 16px;
+      stroke: rgba(201,162,39,0.5);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .device-notice-text {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: rgba(245,230,163,0.4);
+      line-height: 1.5;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== SAFE AREA padding for phones with notches ===== */
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      body {
+        padding-bottom: calc(24px + env(safe-area-inset-bottom));
+        padding-top: calc(24px + env(safe-area-inset-top));
+      }
+    }
+
+    /* ===== SMALL PHONES (iPhone SE, older Androids) ===== */
+    @media (max-width: 360px) {
+      .card-content {
+        padding: 28px 18px 22px;
+      }
+      .card-event-title { font-size: 1.9rem; }
+      .card-event-year { font-size: 1.2rem; }
+      .guest-name { font-size: 1.4rem; }
+      .couple-name { font-size: 0.85rem; }
+      .event-details { padding: 10px 4px; }
+      .detail-label { font-size: 0.45rem; letter-spacing: 0.15em; }
+      .detail-value { font-size: 0.78rem; }
+      .serial-badge { padding: 6px 14px; }
+      .serial-number { font-size: 0.72rem; }
+      .qr-code { width: 76px; height: 76px; }
+      .corner-ornament { width: 24px; height: 24px; }
+      .corner-tl::before, .corner-tr::before, .corner-bl::before, .corner-br::before { width: 14px; }
+      .corner-tl::after, .corner-tr::after, .corner-bl::after, .corner-br::after { height: 14px; }
+    }
+
+    /* ===== MEDIUM PHONES (iPhone 12/13/14, most Androids) ===== */
+    @media (min-width: 361px) and (max-width: 430px) {
+      .card-content {
+        padding: 32px 22px 26px;
+      }
+    }
+
+    /* ===== LARGE PHONES & SMALL TABLETS ===== */
+    @media (min-width: 431px) {
+      body {
+        padding: 40px 20px;
+      }
+
+      .access-card {
+        border-radius: 24px;
+      }
+
+      .card-border-frame {
+        inset: 8px;
+        border-radius: 18px;
+      }
+
+      .card-border-frame::before {
+        border-radius: 14px;
+      }
+
+      .card-content {
+        padding: 40px 30px 32px;
+      }
+
+      .divider-line {
+        width: 60px;
+      }
+
+      .corner-ornament { width: 40px; height: 40px; }
+      .corner-tl { top: 14px; left: 14px; }
+      .corner-tr { top: 14px; right: 14px; }
+      .corner-bl { bottom: 14px; left: 14px; }
+      .corner-br { bottom: 14px; right: 14px; }
+      .corner-tl::before, .corner-tr::before, .corner-bl::before, .corner-br::before { width: 20px; }
+      .corner-tl::after, .corner-tr::after, .corner-bl::after, .corner-br::after { height: 20px; }
+    }
+
+    /* ===== PREFERS REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      .card-shimmer { animation: none; }
     }
   </style>
 </head>
 <body>
 
-  <div>
-    <div class="page-title">
-      <h1>ACCESS CARD PREVIEW</h1>
-      <p>WEDDING GUEST VERIFICATION CARD</p>
+  <!-- THE ACCESS CARD -->
+  <div class="access-card">
+    <!-- Shimmer effect -->
+    <div class="card-shimmer"></div>
+
+    <!-- Border frame -->
+    <div class="card-border-frame"></div>
+
+    <!-- Corner ornaments -->
+    <div class="corner-ornament corner-tl"></div>
+    <div class="corner-ornament corner-tr"></div>
+    <div class="corner-ornament corner-bl"></div>
+    <div class="corner-ornament corner-br"></div>
+
+    <!-- Background -->
+    <div class="card-bg-pattern"></div>
+    <div class="card-glow"></div>
+    <div class="card-glow-bottom"></div>
+
+    <!-- Verified badge -->
+    <div class="verified-badge">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
     </div>
 
-    <div class="card-container">
-      <div class="access-card card-status-valid">
-        <!-- Shimmer effect -->
-        <div class="card-shimmer"></div>
+    <!-- Card Content -->
+    <div class="card-content">
+      <!-- Event branding -->
+      <div class="card-label">You are invited to</div>
+      <div class="card-event-title"><em>Lock In</em></div>
+      <div class="card-event-year">2026</div>
+      <div class="couple-name">LAURETTA &amp; CALEB</div>
 
-        <!-- Border frame -->
-        <div class="card-border-frame"></div>
+      <!-- Divider -->
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond">&#10022;</div>
+        <div class="divider-line"></div>
+      </div>
 
-        <!-- Corner ornaments -->
-        <div class="corner-ornament corner-tl"></div>
-        <div class="corner-ornament corner-tr"></div>
-        <div class="corner-ornament corner-bl"></div>
-        <div class="corner-ornament corner-br"></div>
+      <!-- Guest info -->
+      <div class="guest-section">
+        <div class="guest-label">This card admits</div>
+        <div class="guest-name">Chioma Adeyemi</div>
+        <div class="guest-count">+ 1 Guest</div>
+      </div>
 
-        <!-- Background -->
-        <div class="card-bg-pattern"></div>
-        <div class="card-glow"></div>
-        <div class="card-glow-bottom"></div>
-
-        <!-- Verified badge -->
-        <div class="verified-badge">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>
+      <!-- Event details -->
+      <div class="event-details">
+        <div class="detail-item">
+          <div class="detail-label">Date</div>
+          <div class="detail-value">April 25<br>2026</div>
         </div>
-
-        <!-- Card Content -->
-        <div class="card-content">
-          <!-- Event branding -->
-          <div class="card-label">You are invited to</div>
-          <div class="card-event-title"><em>Lock In</em></div>
-          <div class="card-event-year">2026</div>
-          <div class="couple-name">LAURETTA & CALEB</div>
-
-          <!-- Divider -->
-          <div class="divider">
-            <div class="divider-line"></div>
-            <div class="divider-diamond">&#10022;</div>
-            <div class="divider-line"></div>
-          </div>
-
-          <!-- Guest info -->
-          <div class="guest-section">
-            <div class="guest-label">This card admits</div>
-            <div class="guest-name">Chioma Adeyemi</div>
-            <div class="guest-count">+ 1 Guest</div>
-          </div>
-
-          <!-- Event details -->
-          <div class="event-details">
-            <div class="detail-item">
-              <div class="detail-label">Date</div>
-              <div class="detail-value">April 25<br>2026</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Time</div>
-              <div class="detail-value">1:30 PM</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Venue</div>
-              <div class="detail-value">Royal<br>Gardens</div>
-            </div>
-          </div>
-
-          <!-- Serial number -->
-          <div class="serial-badge">
-            <span class="serial-label">S/N</span>
-            <span class="serial-dot"></span>
-            <span class="serial-number">LK2026-001</span>
-          </div>
-
-          <!-- QR Code -->
-          <div class="qr-section">
-            <div class="qr-code">
-              <div class="qr-placeholder"></div>
-            </div>
-            <span class="qr-hint">Scan to verify</span>
-          </div>
+        <div class="detail-item">
+          <div class="detail-label">Time</div>
+          <div class="detail-value">1:30 PM</div>
         </div>
-
-        <!-- Footer -->
-        <div class="card-footer">
-          <div class="card-footer-text">Non-transferable &bull; One-time access</div>
+        <div class="detail-item">
+          <div class="detail-label">Venue</div>
+          <div class="detail-value">Royal<br>Gardens</div>
         </div>
       </div>
+
+      <!-- Serial number -->
+      <div class="serial-badge">
+        <span class="serial-label">S/N</span>
+        <span class="serial-dot"></span>
+        <span class="serial-number">LK2026-001</span>
+      </div>
+
+      <!-- QR Code -->
+      <div class="qr-section">
+        <div class="qr-code">
+          <div class="qr-placeholder"></div>
+        </div>
+        <span class="qr-hint">Scan to verify</span>
+      </div>
     </div>
+
+    <!-- Mobile action buttons -->
+    <div class="card-actions">
+      <a href="#" class="action-btn">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save to Phone
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <div class="card-footer-text">Non-transferable &bull; One-time access</div>
+    </div>
+  </div>
+
+  <!-- Device lock notice below card -->
+  <div class="device-notice">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span class="device-notice-text">This card is locked to your device. It cannot be viewed on another phone or browser.</span>
   </div>
 
 </body>
