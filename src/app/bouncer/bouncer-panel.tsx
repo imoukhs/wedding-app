@@ -67,9 +67,10 @@ export function BouncerPanel() {
   }
 
   const attendingGuests = optimisticGuests.filter((g) => g.status === "attending");
-  const filteredGuests = attendingGuests.filter((g) =>
-    g.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredGuests = attendingGuests.filter((g) => {
+    const q = search.toLowerCase();
+    return g.name.toLowerCase().includes(q) || (g.serial?.toLowerCase().includes(q) ?? false);
+  });
   const checkedInCount = attendingGuests.filter((g) => g.checkedIn).length;
 
   const sortedGuests = [...filteredGuests].sort((a, b) => {
@@ -170,7 +171,7 @@ export function BouncerPanel() {
       <div className="relative mb-6">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gold-pale/40" />
         <Input
-          placeholder="Search guests..."
+          placeholder="Search by name or serial (LK2026-001)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="bg-deep-purple/60 border-gold/25 text-cream placeholder:text-gold-pale/30 focus:border-gold pl-10"
