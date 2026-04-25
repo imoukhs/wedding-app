@@ -30,7 +30,7 @@ export default async function TableOrderPage({
         {/* Header */}
         <div className="text-center mb-8">
           <p className="font-[family-name:var(--font-display)] text-[0.7rem] tracking-[0.4em] uppercase text-gold mb-2">
-            Table {table.number}
+            {table.section ? `${table.section} · ` : ""}Table {table.number}
           </p>
           <h1 className="font-[family-name:var(--font-heading)] text-[clamp(2rem,5vw,3rem)] font-light text-cream">
             Place Your <em className="italic text-gold-light">Order</em>

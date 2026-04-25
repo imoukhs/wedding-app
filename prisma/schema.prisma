@@ -47,6 +47,7 @@ model WeddingTable {
   id             String         @id @default(cuid())
   number         Int            @unique
   uniqueId       String         @unique @default(cuid())
+  section        String?
   guestCount     Int            @default(0)
   served         Boolean        @default(false)
   servedAt       DateTime?

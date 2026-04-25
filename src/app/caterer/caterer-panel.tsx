@@ -17,6 +17,7 @@ interface TableOrder {
 interface CatererTable {
   id: string;
   number: number;
+  section: string | null;
   guestCount: number;
   served: boolean;
   servedAt: string | null;
@@ -184,6 +185,11 @@ export function CatererPanel() {
                         <h3 className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] uppercase text-gold">
                           Table {table.number}
                         </h3>
+                        {table.section && (
+                          <span className="font-[family-name:var(--font-display)] text-[0.6rem] tracking-[0.15em] uppercase px-2 py-0.5 bg-gold/10 border border-gold/25 text-gold-pale/70">
+                            {table.section}
+                          </span>
+                        )}
                         <span className="flex items-center gap-1 text-gold-pale/60 text-sm">
                           <Users className="w-3.5 h-3.5" /> {table.guestCount}
                         </span>
@@ -253,10 +259,15 @@ export function CatererPanel() {
                   <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-wrap">
                         <h3 className="font-[family-name:var(--font-display)] text-xs tracking-[0.2em] uppercase text-gold/60">
                           Table {table.number}
                         </h3>
+                        {table.section && (
+                          <span className="font-[family-name:var(--font-display)] text-[0.55rem] tracking-[0.1em] uppercase px-1.5 py-0.5 bg-gold/5 border border-gold/15 text-gold-pale/40">
+                            {table.section}
+                          </span>
+                        )}
                         <span className="flex items-center gap-1 text-emerald-400/60 text-xs">
                           <Check className="w-3 h-3" /> Served
                           {table.servedAt && (
